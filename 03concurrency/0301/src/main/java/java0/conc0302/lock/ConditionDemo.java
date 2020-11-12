@@ -16,10 +16,13 @@ class ConditionDemo {
         lock.lock();
         try {
             // 当count等于数组的大小时，当前线程等待，直到notFull通知，再进行生产
-            while (count == items.length)
+            while (count == items.length) {
                 notFull.await();
+            }
             items[putptr] = x;
-            if (++putptr == items.length) putptr = 0;
+            if (++putptr == items.length) {
+                putptr = 0;
+            }
             ++count;
             notEmpty.signal();
         } finally {

@@ -9,9 +9,10 @@ import java.util.stream.IntStream;
 
 public class StreamParallelDemo {
     public static void main(String[] args) {
+        long start = System.currentTimeMillis();
         List<Integer> list = new ArrayList<>();
-        IntStream.range(1, 10000).forEach(i -> list.add(i));
-        BlockingQueue<Long> blockingQueue = new LinkedBlockingQueue(10000);
+        IntStream.range(1, 50000000).forEach(i -> list.add(i));
+        BlockingQueue<Long> blockingQueue = new LinkedBlockingQueue(50000000);
         List<Long> longList = list.stream().parallel()
                 .map(i -> i.longValue())
                 .sorted()
@@ -27,7 +28,8 @@ public class StreamParallelDemo {
                 e.printStackTrace();
             }
         });
-        System.out.println("blockingQueue:" + blockingQueue.toString());
+//        System.out.println("blockingQueue:" + blockingQueue.toString());
+        System.out.println("time:" +  (System.currentTimeMillis()-start));
     }
     
     

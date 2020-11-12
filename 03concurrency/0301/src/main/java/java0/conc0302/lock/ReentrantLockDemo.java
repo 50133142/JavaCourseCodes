@@ -6,7 +6,7 @@ public class ReentrantLockDemo {
     public static void main(String[] args) {
         final Count count = new Count();
 
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 5; i++) {
             new Thread() {
                 public void run() {
                     count.get();
@@ -14,7 +14,7 @@ public class ReentrantLockDemo {
             }.start();
         }
 
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 4; i++) {
             new Thread() {
                 public void run() {
                     count.put();

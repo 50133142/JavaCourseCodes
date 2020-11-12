@@ -1,6 +1,7 @@
 package io.github.kimmking.gateway.outbound.httpclient4;
 
 
+import io.github.kimmking.gateway.filter.HttpRequestFilterImpl;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
@@ -63,10 +64,12 @@ public class HttpOutboundHandler {
         final HttpGet httpGet = new HttpGet(url);
         //httpGet.setHeader(HTTP.CONN_DIRECTIVE, HTTP.CONN_CLOSE);
         httpGet.setHeader(HTTP.CONN_DIRECTIVE, HTTP.CONN_KEEP_ALIVE);
+        httpGet.setHeader("yanbing","headers");
         httpclient.execute(httpGet, new FutureCallback<HttpResponse>() {
             @Override
             public void completed(final HttpResponse endpointResponse) {
                 try {
+                    new HttpRequestFilterImpl().filter(inbound,ctx);
                     handleResponse(inbound, ctx, endpointResponse);
                 } catch (Exception e) {
                     e.printStackTrace();

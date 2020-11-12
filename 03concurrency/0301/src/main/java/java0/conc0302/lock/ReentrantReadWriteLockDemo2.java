@@ -3,6 +3,7 @@ package java0.conc0302.lock;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class ReentrantReadWriteLockDemo2 {
@@ -12,7 +13,11 @@ public class ReentrantReadWriteLockDemo2 {
     private final ReentrantReadWriteLock rwLock = new ReentrantReadWriteLock();
 
     public Object readWrite(String key) {
+        ReentrantLock lock = new ReentrantLock();
+        lock.lock();
         Object value = null;
+        lock.unlock();
+
         System.out.println("1.首先开启读锁去缓存中取数据");
         rwLock.readLock().lock();
         try {
